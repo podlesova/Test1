@@ -1,0 +1,143 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<script type="text/javascript">
+
+  function deleteRow(btn) {
+    var row = btn.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  }
+  function addVariant(input){
+    var table = document.getElementById("myTable");
+    var tablelength = table.rows.length;
+    var tbody = table.getElementsByTagName("TBODY")[0];
+    var row = table.insertRow(input + 1);
+    var td1 = document.createElement("TD");
+    td1.style.textAlign = "right";
+    td1.innerHTML = "Вариант ответа: ";
+    var td2 = document.createElement("TD");
+    td2.innerHTML = "<input type='text' name='ques" + input + "_var'" + tablelength + " size='25'>";
+    var td3 = document.createElement("TD");
+    td3.innerHTML = "<input type='button' value='Удалить' onclick='deleteRow(this)'>";
+    td3.colSpan = "2";
+    row.appendChild(td1);
+    row.appendChild(td2);
+    row.appendChild(td3);
+  }
+
+function addQuestion(){
+    var table = document.getElementById("myTable");
+    var tablelength = table.rows.length;
+    var tbody = table.getElementsByTagName("TBODY")[0];
+    for (var i = 0; i < 3; i++) {
+    var row = document.createElement("TR");
+    var td1 = document.createElement("TD");
+    var td2 = document.createElement("TD");
+    td1.style.textAlign = "right";
+    if (i != 0) {
+        td1.innerHTML = "Вариант ответа: ";
+        td2.innerHTML = "<input type='text' name='ques" + tablelength + "_var" + (tablelength + i) + "'" + " size='25'>";
+        var td3 = document.createElement("TD");
+        td3.innerHTML = "<input type='button' value='Удалить' onclick='deleteRow(this)'>";
+        td3.colSpan = "2";
+        row.appendChild(td1);
+        row.appendChild(td2);
+        row.appendChild(td3);
+        }
+    else {
+        td1.innerHTML = "Вопрос: ";
+        inputsize = 50;
+        td2.innerHTML = "<input type='text' name='ques" + tablelength + "'" + " size='50'>";
+        var td3 = document.createElement("TD");
+        td3.innerHTML = "<input type='button' value='Добавить вариант' onclick='addVariant(" + tablelength + ")'>";
+        var td4 = document.createElement("TD");
+        td4.innerHTML = "<input type='checkbox' name='ques" + tablelength + "_check' ><label>Несколько вариантов ответа</label>";
+        row.appendChild(td1);
+        row.appendChild(td2);
+        row.appendChild(td3);
+        row.appendChild(td4);
+        row.id = "ques" + tablelength;}
+    tbody.appendChild(row);}
+  }
+ function setNames(){
+        var table = document.getElementById("myTable");
+        var i = 0;
+        var idTr;
+        var quesCount = 1;
+        var varCount;
+        while (i < table.rows.length) {
+            idTr = table.rows[i].id;
+            if (idTr != ''){
+                table.rows[i].cells[1].children[0].name = "ques" + quesCount;
+                table.rows[i].cells[3].children[0].name = "ques" + quesCount + "_check";
+                i++;
+                varCount = 1;
+                while ((i < table.rows.length)&&(table.rows[i].id == '')) {
+                    table.rows[i].cells[1].children[0].name = "ques" + quesCount + "_var" + varCount;
+                    i++;
+                    varCount++;
+                }
+                quesCount++;
+            }
+            else {
+                i++;
+                }
+        }
+        document.questions.submit();
+    }
+  </script>
+<form method="post" action="/out">
+    <table >
+
+        <tr>
+            <td th:text="${user.name}" align="left"/>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td align="right"><input type="submit" value="Выход"></td>
+        </tr>
+    </table>
+</form>
+<br>
+<br>
+<form name="questions" method="post" action="/createQuestionnaire">
+   <table id="myTable" >
+       <tbody>
+       <tr>
+           <th align="right">Название анкеты:</th>
+           <th align="left" colspan="3"><input type="text" name="quesname" size="50"></th>
+       </tr>
+       <tr id="ques1">
+           <td align="right">Вопрос:</td>
+           <td align="left"><input type="text" name="ques1" size="50"></td>
+           <td align="left"><input type="button" value="Добавить вариант" onclick="addVariant(1)"></td>
+           <td align="left"><input type="checkbox" name="ques1_check" ><label>Несколько вариантов ответа</label></td>
+       </tr>
+       <tr >
+           <td align="right">Вариант ответа:</td>
+           <td align="left"><input type="text" name="ques1_var1" size="25"></td>
+           <td align="left" colspan="2"><input type="button" value="Удалить" onclick="deleteRow(this)"></td>
+       </tr>
+       <tr>
+           <td align="right">Вариант ответа:</td>
+           <td align="left"><input type="text" name="ques1_var2" size="25"></td>
+           <td align="left" colspan="2"><input type="button" value="Удалить" onclick="deleteRow(this)"></td>
+       </tr>
+       </tbody>
+   </table>
+    <br>
+
+    <input type="button" value="Добавить вопрос" onclick="addQuestion()">
+    <br>
+    <br>
+    <br>
+    <input  type="button" value="Сохранить" onclick="setNames()">
+    <br>
+    <br>
+    <br>
+    <a  href="/questionnaire" >Список анкет</a>
+</form>
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<form method="post" action="/out">
+    <table >
+        <tr>
+
+            <td th:text="${user.name}" align="left"/>
+            <td align="right"><input type="submit" value="Выход" ></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+        <tr>
+           <td  align="left" colspan="2"><h3>Пользователи, ответившие на анкету "<span th:text="${questionnaire.name}"></span>":</h3></td>
+        </tr>
+        <tr th:each="item : ${users}">
+           <td colspan="2"> <a th:href="@{|${questionnaire.id}/users/${item.id}|}" ><h4 th:text="${item.name}"></h4></a> </td>
+        </tr>
+</table>
+</form>
+<br>
+<br>
+<a  href="/questionnaire" >Список анкет</a>
+
+</body>
+</html>

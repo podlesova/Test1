@@ -1,0 +1,41 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<form method="post" action="/out">
+    <table >
+        <tr>
+            <td><span th:if="${user.isAdmin}"><a href="/creator">Создать анкету</a></span> </td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td th:text="${user.name}"/>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><input type="submit" value="Выход"></td>
+        </tr>
+    </table>
+</form>
+<br>
+<br>
+<h3 th:if="${error != ''}"><font color="red"  >Вы ответили не на все вопросы</font></h3>
+<form name="question" method="post" action="/questionnaire">
+    <input type="hidden" name="id_ques" th:value="${questionnaire.id}" >
+    <div> <h3 th:text="${questionnaire.name}"></h3></div>
+    <div th:each="question : ${questions}">
+        <h4 th:text="${question.text}"></h4>
+        <div th:each="variant,iterStat : ${variants}">
+            <span th:if="${question.id} == ${variant.question.id}">
+                <input th:if="${question.isRadio == false}" th:name="${question.id}+${iterStat.count}" type="checkbox" th:value="${variant.id}"/>
+                <input th:if="${question.isRadio}" th:name="${question.id}" type="radio" th:value="${variant.id}"/>
+                <label th:text="${variant.text}"></label>
+                <br  th:if="${question.isRadio == false}">
+            </span>
+        </div>
+    </div>
+    <br>
+    <input th:if="${answersize == 0}" type="submit" value="Сохранить">
+    <h3 th:if="${answersize > 0}"><font color="red"  >Вы уже ответили на эту анкету</font></h3>
+    <br>
+    <a th:if="${answersize > 0}" href="/questionnaire" >Список анкет</a>
+</form>
+</body>
+</html>

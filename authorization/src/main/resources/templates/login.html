@@ -1,0 +1,29 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div>
+    <font color="red"><h5 th:text="${error}"></h5></font>
+</div>
+<div style="display:flex;align-items:center;width:20%;height:20%;">
+
+    <form method="post" action="/">
+    <table border="0">
+        <tr>
+            <td align="right">Электронный адрес:</td>
+            <td align="left"><input type="text" name="email"></td>
+        </tr>
+        <tr>
+            <td align="right">Пароль:</td>
+            <td align="left"><input type="text" name="password"></td>
+        </tr>
+        <tr>
+            <td align="left"><input type="submit" value="Войти"></td>
+            <td align="right"><a href="/registration" ><h6>Регистрация</h6></a></td>
+        </tr>
+    </table>
+    </form>
+</div>
+</body>
+</html>

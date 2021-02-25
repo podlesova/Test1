@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<form method="post" action="/out">
+<table >
+    <tr>
+        <td><span th:if="${user.isAdmin}"><a href="/creator">Создать анкету</a></span> </td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td th:text="${user.name}"/>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><input type="submit" value="Выход"></td>
+    </tr>
+</table>
+</form>
+<br>
+<br>
+<table>
+    <tr>
+        <th colspan="3" align="left"><h3>Анкеты:</h3></th>
+
+    </tr>
+    <tr th:each="item : ${queslist}">
+        <td><h4 th:text="${item.name}"></h4></td>
+        <td><h6><a th:href="@{/questions/{id}(id=${item.id})}">Ответить</a> </h6></td>
+        <td><h6><span th:if="${user.isAdmin}"><a th:href="@{/answers/{id}(id=${item.id})}">Посмотреть ответы</a></span></h6> </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

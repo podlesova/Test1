@@ -1,0 +1,44 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:each="error : ${errors}">
+   <font color="red"> <h5 th:text="${error}"></h5></font>
+</div>
+<div style="display:flex;align-items:center;width:20%;height:20%;">
+    <form method="post" >
+
+        <div>
+
+        <table border="0">
+            <tr>
+                <td align="right">Электронный адрес:</td>
+                <td align="left"><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <td align="right">Имя:</td>
+                <td align="left"><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td align="right">Пароль:</td>
+                <td align="left"><input type="text" name="password"></td>
+            </tr>
+            <tr>
+                <td align="right">Подтверждение пароля:</td>
+                <td align="left"><input type="text" name="passwordConfirm"></td>
+            </tr>
+            <tr>
+                <td align="right">Сделать админом:</td>
+                <td align="left"><input type="checkbox" name="isAdmin"></td>
+            </tr>
+            <tr>
+                <td align="left"><input type="submit" value="Зарегистрировать"> </td>
+                <td ></td>
+            </tr>
+        </table>
+        </div>
+    </form>
+</div>
+</body>
+</html>

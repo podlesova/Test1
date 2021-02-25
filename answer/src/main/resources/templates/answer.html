@@ -1,0 +1,41 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<form method="post" action="/out">
+    <table >
+        <tr>
+
+            <td th:text="${user.name}" align="left"/>
+            <td align="right"><input type="submit" value="Выход"></td>
+        </tr>
+        <tr>
+            <td><br></td>
+            <td><br></td>
+        </tr>
+        <tr>
+            <td><br></td>
+            <td><br></td>
+        </tr>
+
+        <tr><td colspan="2"> <h3 >Ответы пользователя <span th:text="${user.name}"></span> на анкету "<span th:text="${questionnaire.name}"></span>"</h3></td></tr>
+        <tr><td colspan="2">
+            <div th:each="question: ${questions}">
+                <h4 th:text="${question.text}"></h4>
+                <div th:each="answer : ${answers}">
+                    <span th:if="${question.id} == ${answer.variant.question.id}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label th:text="${answer.variant.text}"></label>
+                    <br>
+                    </span>
+                </div>
+            </div>
+        </td>
+        </tr>
+    </table>
+</form>
+<br>
+<br>
+<a  th:href="@{/answers/{id}(id=${questionnaire.id})}" >Назад</a>
+
+</body>
+</html>
